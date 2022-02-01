@@ -1,5 +1,8 @@
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS messages;
+DROP DATABASE IF EXISTS messagely;
+CREATE DATABASE messagely;
+\c messagely
+DROP TABLE IF EXISTS users cascade;
+DROP TABLE IF EXISTS messages cascade;
 
 CREATE TABLE users (
     username text PRIMARY KEY,

@@ -11,7 +11,23 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // allow connections to all routes from any browser
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000", // NOTE: change this to the port your running your front end
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+  })
+);
+
+const sessionConfig = {
+  secret: "somesecret",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+  },
+};
+app.use(session(sessionConfig));
 
 // get auth token for all routes
 app.use(authenticateJWT);
@@ -25,6 +41,7 @@ const messageRoutes = require("./routes/messages");
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/messages", messageRoutes);
+const session = require("express-session");
 
 /** 404 handler */
 
